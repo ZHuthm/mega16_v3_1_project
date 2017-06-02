@@ -82,7 +82,7 @@ void LcdInit(void)
 
 	LcdWriteByte(0x21, 0);	// use extended instruction set
 	LcdWriteByte(0xc8, 0);	// set Bias System
-	LcdWriteByte(0x06, 0);	// set Temperature Coefficient
+	LcdWriteByte(0x07, 0);	// set Temperature Coefficient
 	LcdWriteByte(0x13, 0);	// 1:48
 	LcdWriteByte(0x20, 0);	// use basic instruction set
 	LcdWriteByte(0x0c, 0);	// display mode : normal
@@ -140,17 +140,9 @@ void LcdWriteEnglishString(unsigned char X, unsigned char Y, unsigned char inver
 	}
 }
 
-void LcdWriteChineseString(unsigned char x, unsigned char y,
+void LcdWriteChineseString(unsigned char X, unsigned char y,
 	 					   unsigned char *pstr, unsigned char ch_width)
 {
-	unsigned char i;
-	unsigned char addr = 0;
-	unsigned char count = 0;
-	
-	LcdSetXY(x,y);
 
-	//while(*pstr)
-	//{
-		//for(i=0;i<)
-	//}
+
 }

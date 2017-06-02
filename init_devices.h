@@ -21,7 +21,7 @@ unsigned char time_5ms_ok = 0;
 void port_init(void)
 {
  PORTA |= (1 << 3);
- DDRA  |= (1 << 3);
+ DDRA  &= ~(1 << 3);
  //PORTB = 0x00;
  //DDRB  = 0x00;
  PORTC = 0xff; //m103 output only

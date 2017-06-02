@@ -62,19 +62,27 @@ void RightShift(void)
 
 void CustomizeLed(void)
 {
-	unsigned key_state, cursor = 0;
-	unsigned i, j, k;
+	unsigned char key_state, cursor = 0;
+	unsigned char i, j, k;
 
 	LcdCls();
-	
-	LcdWriteEnglishString(0,0,0," Customize Led");
 
+	
+	
 	while (1)
 	{
+		
+		
 		if (time_10ms_ok)
 		{
 			time_10ms_ok = 0;
+			
+			LcdWriteEnglishString(0, 0, 0, " CUSTOMIZE LED");
 
+			LcdWriteEnglishString(0, 1, 0, "==============");
+			
+			LcdWriteEnglishString(60, 5, 0, "ESC");
+			
 			key_state = ReadAdKey();
 
 			switch (key_state)

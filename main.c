@@ -36,7 +36,7 @@ void timer0_comp_isr(void)
 	/*----- compare occured TCNT0=OCR0 -----*/
 	timing();
 	
-	if(menu_point == stopwatch_menu ) // 如果在stopwatch菜单里，则每隔1s响铃
+	if(menu_point == stopwatch_menu) // 如果在stopwatch菜单里，则每隔1s响铃
 	{	
 		if (ms == 0) PORTA &= ~(1 << 3);
 		if (ms == 20) PORTA |= (1 << 3);
@@ -141,8 +141,10 @@ void ShowMenu(void)
 
 void main(void)
 {
-	unsigned char refresh_flag = 1;
-
+	unsigned char refresh_flag = 1;		// 刷新标志位，有显示变化为1
+	
+	unsigned char action_flag = 0;
+	
 	InitSystem();
 
 	ShowMenu();
@@ -152,8 +154,11 @@ void main(void)
 		if (time_10ms_ok)
 		{
 			time_10ms_ok = 0;
-
+			
+			action_flag = 0;
+			
 			refresh_flag = 1;
+			
 			switch (ReadAdKey())
 			{
 			
@@ -169,6 +174,7 @@ void main(void)
 					if(max_items > DISPLAY_ITEMS) disp_start = max_items - DISPLAY_ITEMS;
 					else disp_start = 0;
 				}
+				action_flag = 1;
 				break;
 
 			case DOWN:
@@ -178,6 +184,7 @@ void main(void)
 					user_choice = 0;
 					disp_start = 0;
 				}
+				action_flag = 1;
 				break;
 
 			case LEFT:
@@ -200,35 +207,53 @@ void main(void)
 				
 				
 				if ((menu_point[user_choice].Subs) != (NullSubs))
+				{
+					PORTA &= ~(1 << 3);
+					DelayMs(15);
+					PORTA |= (1 << 3);
+					
 					(*menu_point[user_choice].Subs)();
+					
+					action_flag = 1;
+				}
 				else if (menu_point[user_choice].children_menus != NULL)
 				{
 					menu_point = menu_point[user_choice].children_menus;
 					user_choice = 0;
 					disp_start = 0;
+					action_flag = 1;
 				}
 				
 								
 				break;
 
-			case ESC:
+			case ESC:	
+			
+			
+				
 				if (menu_point[0].parent_menus != NULL)
 				{
 					menu_point = menu_point[0].parent_menus;
 					user_choice = 0;
 					disp_start = 0;
-					
-					/*----- Select feedback animation -----*/
-					LcdWriteEnglishString(60, 5, 1, "ESC");
-					DelayMs(500);
+					action_flag = 1;
 				}
+				
+				/*----- Select feedback animation -----*/
+				LcdWriteEnglishString(60, 5, 1, "ESC");
+				DelayMs(500);
 				
 				break;
 				
 			default : break;
 
 			}
-			if (refresh_flag)	ShowMenu();
+			
+			if (refresh_flag)		ShowMenu();
+			
+			if(	action_flag	)	PORTA &= ~(1 << 3);
+			else if( (PORTA & (1<<3)) == 0) PORTA |= (1 << 3);
+			
 		}
 	}
 

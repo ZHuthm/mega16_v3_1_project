@@ -23,6 +23,8 @@
 #define SET_LCD_RST()        PORTA |= (1<<5)
 #define CLR_LCD_RST()        PORTA &= ~(1<<5)
 
+//extern unsigned char tc_status;
+
 void InitSpi(void);
 
 void InitLcdDevices(void);

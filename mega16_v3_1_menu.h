@@ -9,7 +9,6 @@
 
 #define DISPLAY_ITEMS 4
 
-
 #define MAIN_MENU_NUMS 5
 
 #define TIME_MENU_NUMS 2
@@ -20,7 +19,7 @@
 
 #define TEMP_MENU_NUMS 1
 
-#define SET_MENU_NUMS 2
+#define SET_MENU_NUMS 1
 
 
 struct MenuItem
@@ -87,12 +86,11 @@ const struct MenuItem led_menu[LED_MENU_NUMS] = {
 // temp_menu
 
 const struct MenuItem temp_menu[TEMP_MENU_NUMS] = {
-	{ TEMP_MENU_NUMS,"1 Show Temp :)",NullSubs,		NULL,	   main_menu,"   TEMP MENU"}
+	{ TEMP_MENU_NUMS,"1 Show Temp   ",ShowTemp,		NULL,	   main_menu,"   TEMP MENU"}
 };
 
 const struct MenuItem setting_menu[SET_MENU_NUMS] = {
-	{ SET_MENU_NUMS,"1 Volume    :)",NullSubs,		NULL,	   main_menu," SETTING MENU"},
-	{ SET_MENU_NUMS,"2 Contrast  :)",NullSubs,		NULL,	   main_menu,}
+	{ SET_MENU_NUMS,"1 Volume      ",SetVolume,		NULL,	   main_menu," SETTING MENU"}
 };
 
 
