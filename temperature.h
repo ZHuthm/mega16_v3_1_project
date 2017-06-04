@@ -48,12 +48,16 @@ void ShowTemp(void)
 				
 
 		//DelayMs(1000);
-		if(ReadAdKey() == ESC) break;
+		if(ReadAdKey() == ESC) 
+			break;
 
 	}
 	
 	/*----- Select feedback animation -----*/
 	LcdWriteEnglishString(60, 5, 1, "ESC");
+	PORTA &= ~(1 << 3);
+	DelayMs(15);
+	PORTA |= (1 << 3);
 	DelayMs(500);
 }
 

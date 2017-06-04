@@ -72,7 +72,6 @@ void CustomizeLed(void)
 	while (1)
 	{
 		
-		
 		if (time_10ms_ok)
 		{
 			time_10ms_ok = 0;
@@ -88,6 +87,13 @@ void CustomizeLed(void)
 			switch (key_state)
 			{
 			case ESC:
+				/*----- Select feedback animation -----*/
+				LcdWriteEnglishString(60, 5, 1, "ESC");
+				PORTA &= ~(1 << 3);
+				DelayMs(15);
+				PORTA |= (1 << 3);
+				DelayMs(500);
+				
 				return;
 				break;
 

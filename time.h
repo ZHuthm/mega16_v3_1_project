@@ -10,23 +10,30 @@ unsigned char time_flag = 0;
 
 void timing(void)
 {
-	if (++ms >= 500)
-	{
-		ms = 0;
-		
+	ms++;
+	
+	if (ms == 250)
+	
 		DP_flag = ~DP_flag;
 		
-		if (++sec >= 60)
+	else if (ms >= 500)
 		{
-			sec = 0;
-			
-			if (++mins >= 60)	mins = 0; 			
+			ms = 0;
+
+			DP_flag = ~DP_flag;
+
+			if (++sec >= 60)
+			{
+				sec = 0;
+
+				if (++mins >= 60)	mins = 0;
+			}
+
 		}
-		
-	}
 	
-	if(mins==0) num_to_dispbuff(sec*100 + ms*2/10);
-	else num_to_dispbuff(mins*100 + sec);
+	
+	if (mins == 0) num_to_dispbuff(sec * 100 + ms * 2 / 10);
+	else num_to_dispbuff(mins * 100 + sec);
 }
 
 void StopWatch(void)

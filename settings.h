@@ -45,6 +45,12 @@ void SetVolume(void)
 				LcdWriteEnglishString(48, 3, 0, "      ");
 				LcdWriteEnglishString(48, 3, 1, "Sound");
 				buzz_status_tmp = 1;
+				
+				DDRA |= (1 << 3); 
+				PORTA &= ~(1 << 3);
+				DelayMs(50);
+				PORTA |= (1 << 3);
+				DDRA &= ~(1 << 3);
 			}
 			break;
 
@@ -62,7 +68,12 @@ void SetVolume(void)
 			buzz_status = buzz_status_tmp;
 
 			if (buzz_status) 
-				DDRA |= (1 << 3);
+				{
+					DDRA |= (1 << 3);
+					PORTA &= ~(1 << 3);
+					DelayMs(15);
+					PORTA |= (1 << 3);
+				}
 			else 
 				DDRA &= ~(1 << 3);
 
@@ -78,6 +89,9 @@ void SetVolume(void)
 		case ESC:
 			/*----- Select feedback animation -----*/
 			LcdWriteEnglishString(60, 5, 1, "ESC");
+			PORTA &= ~(1 << 3);
+			DelayMs(15);
+			PORTA |= (1 << 3);
 			DelayMs(500);
 
 			return; break;

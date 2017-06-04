@@ -100,12 +100,12 @@ void InitSystem(void)
 
 void ShowWelcomeInterface(void)
 {
-	LcdWriteEnglishString(6, 0, 0, "UP:    KEY 3 ");
-	LcdWriteEnglishString(6, 1, 0, "DOWN:  KEY 2 ");
-	LcdWriteEnglishString(6, 2, 0, "LEFT:  KEY 4 ");
-	LcdWriteEnglishString(6, 3, 0, "RIGHT: KEY 1 ");
-	LcdWriteEnglishString(6, 4, 0, "ENTER: KEY 6 ");
-	LcdWriteEnglishString(6, 5, 0, "ESC:   KEY 5 ");
+	LcdWriteEnglishString(6, 0, 0, "UP   > KEY 3 ");
+	LcdWriteEnglishString(6, 1, 0, "DOWN > KEY 2 ");
+	LcdWriteEnglishString(6, 2, 0, "LEFT > KEY 4 ");
+	LcdWriteEnglishString(6, 3, 0, "RIGHT> KEY 1 ");
+	LcdWriteEnglishString(6, 4, 0, "ENTER> KEY 6 ");
+	LcdWriteEnglishString(6, 5, 0, "ESC  > KEY 5 ");
 }
 
 void UtilityWizards(void)
@@ -124,32 +124,32 @@ void UtilityWizards(void)
 			{
 			case UP:
 				u = 1;
-				LcdWriteEnglishString(6, 0, 1, "UP:    KEY 3 ");
+				LcdWriteEnglishString(42, 0, 1, " KEY 3 ");
 				break;
 
 			case DOWN:
 				d = 1;
-				LcdWriteEnglishString(6, 1, 1, "DOWN:  KEY 2 ");
+				LcdWriteEnglishString(42, 1, 1, " KEY 2 ");
 				break;
 
 			case LEFT:
 				l = 1;
-				LcdWriteEnglishString(6, 2, 1, "LEFT:  KEY 4 ");
+				LcdWriteEnglishString(42, 2, 1, " KEY 4 ");
 				break;
 
 			case RIGHT:
 				r = 1;
-				LcdWriteEnglishString(6, 3, 1, "RIGHT: KEY 1 ");
+				LcdWriteEnglishString(42, 3, 1, " KEY 1 ");
 				break;
 
 			case ENTER:
 				en = 1;
-				LcdWriteEnglishString(6, 4, 1, "ENTER: KEY 6 ");
+				LcdWriteEnglishString(42, 4, 1, " KEY 6 ");
 				break;
 
 			case ESC:
 				es = 1;
-				LcdWriteEnglishString(6, 5, 1, "ESC:   KEY 5 ");
+				LcdWriteEnglishString(42, 5, 1, " KEY 5 ");
 				break;
 
 			default:
@@ -158,6 +158,8 @@ void UtilityWizards(void)
 
 		}
 	}
+	
+	DelayMs(1000);
 	
 	LcdCls();
 	
@@ -282,12 +284,11 @@ void main(void)
 				if ((menu_point[user_choice].Subs) != (NullSubs))
 				{
 					PORTA &= ~(1 << 3);
-					DelayMs(15);
+					DelayMs(25);
 					PORTA |= (1 << 3);
 
 					(*menu_point[user_choice].Subs)();
 
-					action_flag = 1;
 				}
 				else if (menu_point[user_choice].children_menus != NULL)
 				{
@@ -301,8 +302,6 @@ void main(void)
 				break;
 
 			case ESC:
-
-
 
 				if (menu_point[0].parent_menus != NULL)
 				{
@@ -322,10 +321,16 @@ void main(void)
 
 			}
 
-			if (refresh_flag)		ShowMenu();
+			if (refresh_flag)		
+				ShowMenu();
 
-			if (action_flag)	PORTA &= ~(1 << 3);
-			else if ((PORTA & (1 << 3)) == 0) PORTA |= (1 << 3);
+			if ( action_flag ) 
+			{
+				PORTA &= ~(1 << 3);
+				DelayMs(15); 
+				PORTA |= (1 << 3);
+			}
+			//else if ((PORTA & (1 << 3)) == 0 ) PORTA |= (1 << 3);
 
 		}
 	}
