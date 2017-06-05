@@ -26,7 +26,7 @@ void ShowSetVolumeInterface(void)
 
 void SetVolume(void)
 {
-	unsigned char key_status, buzz_status_tmp;
+	unsigned char buzz_status_tmp;
 
 	ShowSetVolumeInterface();
 
@@ -34,19 +34,18 @@ void SetVolume(void)
 
 	while (1)
 	{
-		
-		key_status = ReadAdKey();
 
-		switch (key_status)
+		switch (ReadAdKey())
 		{
 
 		case UP:
+
 			if (!buzz_status_tmp) {
 				LcdWriteEnglishString(48, 3, 0, "      ");
 				LcdWriteEnglishString(48, 3, 1, "Sound");
 				buzz_status_tmp = 1;
-				
-				DDRA |= (1 << 3); 
+
+				DDRA |= (1 << 3);
 				PORTA &= ~(1 << 3);
 				DelayMs(50);
 				PORTA |= (1 << 3);
@@ -56,6 +55,7 @@ void SetVolume(void)
 
 
 		case DOWN:
+
 			if (buzz_status_tmp) {
 				LcdWriteEnglishString(48, 3, 0, "      ");
 				LcdWriteEnglishString(48, 3, 1, "Silent");
@@ -65,16 +65,17 @@ void SetVolume(void)
 
 
 		case ENTER:
+
 			buzz_status = buzz_status_tmp;
 
-			if (buzz_status) 
-				{
-					DDRA |= (1 << 3);
-					PORTA &= ~(1 << 3);
-					DelayMs(15);
-					PORTA |= (1 << 3);
-				}
-			else 
+			if (buzz_status)
+			{
+				DDRA |= (1 << 3);
+				PORTA &= ~(1 << 3);
+				DelayMs(15);
+				PORTA |= (1 << 3);
+			}
+			else
 				DDRA &= ~(1 << 3);
 
 			/*----- Select feedback animation -----*/
@@ -87,6 +88,7 @@ void SetVolume(void)
 
 
 		case ESC:
+
 			/*----- Select feedback animation -----*/
 			LcdWriteEnglishString(60, 5, 1, "ESC");
 			PORTA &= ~(1 << 3);
@@ -95,14 +97,67 @@ void SetVolume(void)
 			DelayMs(500);
 
 			return; break;
-			
+
 		}
 	}
 }
 
 void  SetTc(void)//Temperature Coefficient
-{	
-	
+{
+
+}
+
+void ResetSystem(void)
+{
+	unsigned char value = 0;
+
+	LcdCls();
+
+	LcdWriteEnglishString(0, 0, 0, " RESET SYSTEM");
+
+	LcdWriteEnglishString(0, 1, 0, "==============");
+
+	LcdWriteEnglishString(18, 3, 0, "Confirm?");
+
+	LcdWriteEnglishString(12, 5, 0, "YES");
+
+	LcdWriteEnglishString(60, 5, 0, "NO");
+
+	while (1)
+	{
+		if (time_10ms_ok)
+		{
+			time_10ms_ok = 0;
+
+			switch (ReadAdKey())
+			{
+			case ENTER:
+
+				CLI(); //disable all interrupts
+				EEPROM_WRITE(0x0000, value);
+				SEI(); //re-enable interrupts
+
+				LcdWriteEnglishString(12, 3, 1, "COMPLETED!");
+
+				/*----- Select feedback animation -----*/
+				LcdWriteEnglishString(12, 5, 1, "YES");
+				DelayMs(2000);
+
+				return;
+
+			case ESC:
+
+				/*----- Select feedback animation -----*/
+				LcdWriteEnglishString(60, 5, 1, "NO");
+				DelayMs(500);
+
+				return;
+
+			default:
+				break;
+			}
+		}
+	}
 }
 
 #endif

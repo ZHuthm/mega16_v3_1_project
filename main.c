@@ -1,3 +1,4 @@
+#include "eeprom.h"
 #include "init_devices.h"
 #include "mega16_v3_1_ad_key.h"
 #include "mega16_v3_1_lcd3310.h"
@@ -111,9 +112,26 @@ void ShowWelcomeInterface(void)
 void UtilityWizards(void)
 {
 	unsigned char u, d, l, r, en, es;
+
+	unsigned char user_status;
+
+	CLI(); //disable all interrupts
+	EEPROM_READ(0x0000, user_status);
+	SEI(); //re-enable interrupts
+
+	if (user_status == 1)
+	{
+		LcdWriteEnglishString(18, 2, 0, "Welcome!");
+
+		DelayMs(3000);
+
+		return;
+	}
+
 	u = d = l = r = en = es = 0;
 
 	ShowWelcomeInterface();
+
 	while (!(u&d&l&r&en&es))
 	{
 		if (time_10ms_ok)
@@ -158,15 +176,21 @@ void UtilityWizards(void)
 
 		}
 	}
-	
+
+	user_status = 1;
+
+	CLI(); //disable all interrupts
+	EEPROM_WRITE(0x0000, user_status);
+	SEI(); //re-enable interrupts
+
 	DelayMs(1000);
-	
+
 	LcdCls();
-	
+
 	LcdWriteEnglishString(18, 2, 0, "Welcome!");
-	
+
 	DelayMs(3000);
-	
+
 }
 
 
@@ -321,13 +345,13 @@ void main(void)
 
 			}
 
-			if (refresh_flag)		
+			if (refresh_flag)
 				ShowMenu();
 
-			if ( action_flag ) 
+			if (action_flag)
 			{
 				PORTA &= ~(1 << 3);
-				DelayMs(15); 
+				DelayMs(15);
 				PORTA |= (1 << 3);
 			}
 			//else if ((PORTA & (1 << 3)) == 0 ) PORTA |= (1 << 3);

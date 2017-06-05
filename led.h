@@ -67,21 +67,19 @@ void CustomizeLed(void)
 
 	LcdCls();
 
-	
-	
 	while (1)
 	{
-		
+
 		if (time_10ms_ok)
 		{
 			time_10ms_ok = 0;
-			
+
 			LcdWriteEnglishString(0, 0, 0, " CUSTOMIZE LED");
 
 			LcdWriteEnglishString(0, 1, 0, "==============");
-			
+
 			LcdWriteEnglishString(60, 5, 0, "ESC");
-			
+
 			key_state = ReadAdKey();
 
 			switch (key_state)
@@ -93,7 +91,7 @@ void CustomizeLed(void)
 				DelayMs(15);
 				PORTA |= (1 << 3);
 				DelayMs(500);
-				
+
 				return;
 				break;
 
@@ -121,7 +119,7 @@ void CustomizeLed(void)
 			{
 				j = i * 6;
 				k = !(cursor - (i - 3));
-				
+
 				if (led_state[i - 3])
 				{
 					LcdWriteEnglishString(j, 2, k, "O");
@@ -134,7 +132,7 @@ void CustomizeLed(void)
 					LcdWriteEnglishString(j, 3, k, "N");
 				}
 			}
-			
+
 		}
 	}
 	ReadAdKey();

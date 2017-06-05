@@ -32,27 +32,27 @@ void ShowTemp(void)
 			tval = GetTemperature(tmp);//计算实际温度值
 
 			if (tval >= 0) {
-				
+
 				tmp[1] = tval % 10 + '0';
 				tmp[0] = tval % 100 / 10 + '0';
 				LcdWriteEnglishString(48, 3, 0, "     ");
 				LcdWriteEnglishString(54, 3, 0, tmp); //十进制显示温度值
 			}
-			else 
+			else
 				//数码管无法显示负数,只能显示0
 				//to do...
-				LcdWriteEnglishString(48, 3, 1, "ERROR");				
+				LcdWriteEnglishString(48, 3, 1, "ERROR");
 		}
 		else
-				LcdWriteEnglishString(48, 3, 1, "ERROR");
-				
+			LcdWriteEnglishString(48, 3, 1, "ERROR");
+
 
 		//DelayMs(1000);
-		if(ReadAdKey() == ESC) 
+		if (ReadAdKey() == ESC)
 			break;
 
 	}
-	
+
 	/*----- Select feedback animation -----*/
 	LcdWriteEnglishString(60, 5, 1, "ESC");
 	PORTA &= ~(1 << 3);
