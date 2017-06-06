@@ -11,7 +11,7 @@
 
 #define MAIN_MENU_NUMS 5
 
-#define TIME_MENU_NUMS 2
+#define TIME_MENU_NUMS 1
 
 #define STOPWATCH_MENU_NUMS 2
 
@@ -36,6 +36,7 @@ struct MenuItem
 	const struct MenuItem *parent_menus;
 
 	char * const disp_title;
+	
 };
 
 extern const struct MenuItem main_menu[			MAIN_MENU_NUMS		];
@@ -58,7 +59,6 @@ void NullSubs(void)
 }
 
 
-
 // main_menu
 const struct MenuItem main_menu[MAIN_MENU_NUMS] = {
 	{ MAIN_MENU_NUMS,		"1 LED Control ",	NullSubs, 		led_menu, 			NULL,			"   MAIN MENU" },
@@ -70,8 +70,8 @@ const struct MenuItem main_menu[MAIN_MENU_NUMS] = {
 
 // time_menu
 const struct MenuItem time_menu[TIME_MENU_NUMS] = {
-	{ TIME_MENU_NUMS,		"1 Stopwatch   ",	NullSubs,	 	stopwatch_menu,	   main_menu,		"   TIME MENU" },
-	{ TIME_MENU_NUMS,		"2 SET Time  :)",	NullSubs,		NULL,	  		   main_menu }
+	{ TIME_MENU_NUMS,		"1 Stopwatch   ",	NullSubs,	 	stopwatch_menu,	   main_menu,		"   TIME MENU" }
+	//{ TIME_MENU_NUMS,		"2 SET Time  :)",	NullSubs,		NULL,	  		   main_menu }
 };
 
 // stopwatch_menu

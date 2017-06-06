@@ -57,12 +57,15 @@ void RightShift(void)
 	PORTC = 0xff;
 	for (i = 0; i < 8; i++)
 		if (!led_state[i])  PORTC &= ~(1 << (7 - i));
+		
 }
 
 
 void CustomizeLed(void)
 {
+
 	unsigned char key_state, cursor = 0;
+	
 	unsigned char i, j, k;
 
 	LcdCls();

@@ -1,3 +1,6 @@
+#include <iom16v.h>
+#include <macros.h>
+
 #include "mega16_v3_1_ad_key.h"
 
 #define  key_state_0 0
@@ -40,7 +43,7 @@ unsigned char GetAdKey(void)
 
 	adc_data = GetAdData();
 
-	if (adc_data <= 127) { key_value = 1; } 		// right
+	if (adc_data <= 127)      { key_value = 1; } 		// right
 	else if (adc_data <= 332) { key_value = 2; }	// down
 	else if (adc_data <= 460) { key_value = 4; } 	// left
 	else if (adc_data <= 548) { key_value = 3; } 	// up

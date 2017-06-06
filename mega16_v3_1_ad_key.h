@@ -1,9 +1,6 @@
 #ifndef _MEGA16_V3_1_AD_KEY_
 #define _MEGA16_V3_1_AD_KEY_
 
-#include <iom16v.h>
-#include <macros.h>
-
 # define NO_ACTION 0
 
 # define UP        3

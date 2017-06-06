@@ -4,15 +4,14 @@
 // CS  (LCD-SCE)  <=> PA4
 // RST (LCE-RES)  <=> PA5
 
-#ifndef _LCD3310_H_
-#define _LCD3310_H_
+#ifndef _MEGA16_V3_1_LCD3310_H_
+#define _MEGA16_V3_1_LCD3310_H_
 
 #define SET_SPI_CLK()        PORTB |= (1<<7)
 #define CLR_SPI_CLK()        PORTB &= ~(1<<7)
 
 #define SET_SPI_MOSI()       PORTB |= (1<<5)
 #define CLR_SPI_MOSI()       PORTB &= ~(1<<5)
-
 
 #define SET_LCD_DC()         PORTA |= (1<<6)
 #define CLR_LCD_DC()         PORTA &= ~(1<<6)

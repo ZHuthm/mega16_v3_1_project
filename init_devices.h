@@ -15,6 +15,9 @@ unsigned char time_10ms_ok = 0;
 
 unsigned char time_5ms_ok = 0;
 
+unsigned char time_1s_counter = 0;
+
+unsigned char time_1s_ok = 0;
 
 /*******************************************/
 

@@ -7,8 +7,8 @@
 #define CLR_STCLK()  		PORTB&=~(1<<0)		  
 #define SET_STCLK()  		PORTB|=(1<<0)		  
 
-#define CLR_DS()		PORTA&=~(1<<0)		  
-#define SET_DS()		PORTA|=(1<<0)		  
+#define CLR_DS()			PORTA&=~(1<<0)		  
+#define SET_DS()			PORTA|=(1<<0)		  
 
 const unsigned char led_7[] = { 0xc0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,
 0x80,0x90,0xff,0x7f,0xc6,0x00 };
@@ -37,6 +37,7 @@ void num_to_dispbuff(unsigned int num)
 
 void HC595_send_byte(unsigned char SndData)
 {
+
 	unsigned char i;
 
 	for (i = 0; i<8; i++)
@@ -51,6 +52,7 @@ void HC595_send_byte(unsigned char SndData)
 	}
 	CLR_STCLK();
 	SET_STCLK();
+	
 }
 
 
@@ -66,5 +68,7 @@ void Disp_1_digit(unsigned char posit, unsigned char DP_flag)
 	PORTD &= ~(1 << (7 - posit));					// 0 is selected,and set the other bits to 1
 													//Delay_ms(1);								// to prevent flicker too fast
 }
+
+
 
 #endif

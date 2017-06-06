@@ -1,3 +1,6 @@
+#include <iom16v.h>
+#include <macros.h>
+
 #include "mega16_v3_1_ds18b20.h"
 
 /******************************************************/
@@ -38,7 +41,16 @@ void tickDelay(unsigned int tick)
 	while (tick--){NOP();NOP();NOP();NOP();}
 }
 
-unsigned char InitDs18b20(void)
+
+void Delay_ms(unsigned int mSec)
+{
+	int i;
+	while (mSec--)
+		for (i = 0; i<(187 * 2); i++);
+}
+
+
+unsigned char ds18b20Reset(void)
 {
 	unsigned char status;
 	
@@ -136,40 +148,59 @@ unsigned char ds18b20ReadByte(void)
 	return result;
 }
 
-void Delay_ms(unsigned int mSec)
+unsigned char InitDs18b20(void)
 {
-	int i;
-	while (mSec--)
-		for (i = 0; i<(187 * 2); i++);
+	if (ds18b20Reset() != 0x00) return 1; // initialize failed
+
+	ds18b20WriteByte(DS18B20_SKIP_ROM);
+
+	ds18b20WriteByte(DS18B20_WRITE_RAM);
+
+	ds18b20WriteByte(0);				// TH
+
+	ds18b20WriteByte(0);				// TL
+
+	ds18b20WriteByte(0x1f);				// R1 = 0, RO = 0 ,Thermometer Resolution = 9bits
+	// Max Conversion Time  < 100ms
+	
+	return 0;
 }
 
 unsigned char ds18b20ConvertTemp(unsigned char *temp)
 {
 
-	if (InitDs18b20()!=0x00) return 1; // initialize failed
+	if (ds18b20Reset()!=0x00) return 1; // initialize failed
 
 	ds18b20WriteByte(DS18B20_SKIP_ROM);
 
 	ds18b20WriteByte(DS18B20_CONVERT_TEM);
 
-	Delay_ms(800);
+	Delay_ms(100);
 
-	if (InitDs18b20()!=0x00) return 1; // initialize failed
+	if (ds18b20Reset()!=0x00) return 1; // initialize failed
 
 	ds18b20WriteByte(DS18B20_SKIP_ROM);
 
 	ds18b20WriteByte(DS18B20_READ_RAM);
 	
-	temp[0] = ds18b20ReadByte();
+	temp[0] = ds18b20ReadByte();			// Read the first byte is Temp LSB
 
-	temp[1] = ds18b20ReadByte();
+	temp[1] = ds18b20ReadByte();			// Temp MSB
 	
 	return 0; // successfully
 }
 
 char GetTemperature(unsigned char *t)
 {	
+	char return_t;
 
+	t[0] >>= 4;
+	t[1] <<= 4;
+
+	return_t = t[1] + t[0];
+	
+	return return_t;
+	/*
 	char ret;
 	unsigned long val;
 	unsigned int temp = (t[1] * 256) + t[0];
@@ -192,21 +223,46 @@ char GetTemperature(unsigned char *t)
 		ret |= 0x80;
 	
 	return ret;
-	
+	*/
 }
 
+void TempToStr(char temp,unsigned char *s_t)
+{
+
+	if (temp >= 0)
+	{	
+		s_t[0] = temp % 100 / 10 + '0';
+		s_t[1] = temp % 10 + '0';
+		s_t[2] = ' ';
+	}
+	else
+	{
+		temp = ~temp;
+		temp++;
+
+		s_t[0] = '-';
+		s_t[1] = temp % 100 / 10 + '0';
+		s_t[2] = temp % 10 + '0';
+	}
+
+}
+
+
+
+
 /*
-unsigned char tmp[2];//保存温度字节
+unsigned char tmp[3];//保存温度字节
 char tval;    //保存温度值
 
 if((ds18b20ConvertTemp(tmp) & (1<<0)) == 0)//如果转换成功
     {
        tval=GetTemperature(tmp);//计算实际温度值
+	   tmp//十进制显示温度值
       if(tval>=0)
         //to do...
-		//十进制显示温度值
+		
       else
         //to do...
-		//数码管无法显示负数,只能显示0
+		
     }
 */

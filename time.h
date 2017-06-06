@@ -1,7 +1,6 @@
 #ifndef _TIME_H_
 #define _TIME_H_
 
-
 unsigned int ms = 0;		// millisecond
 unsigned char sec = 0;		// second
 unsigned char mins = 0;		// minutes

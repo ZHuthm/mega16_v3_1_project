@@ -37,7 +37,7 @@ void timer0_comp_isr(void)
 	/*----- compare occured TCNT0=OCR0 -----*/
 	timing();
 
-	if (menu_point == stopwatch_menu) // 如果在stopwatch菜单里，则每隔1s响铃
+	if (menu_point == stopwatch_menu) 	// 如果在stopwatch菜单里，则每隔1s响铃
 	{
 		if (ms == 0) PORTA &= ~(1 << 3);
 		if (ms == 20) PORTA |= (1 << 3);
@@ -54,10 +54,15 @@ void timer2_comp_isr(void)
 
 	if (++time_10ms_counter >= 2) {
 		time_10ms_counter = 0;
-		time_10ms_ok = 1;  	 // 10ms is come 	 	
+		time_10ms_ok = 1;  	 		// 10ms is come 	
+		if(++time_1s_counter >= 100)
+		{
+			time_1s_counter = 0;
+			time_1s_ok = 1;
+		} 	
 	}
 
-	if ((PORTD & 0xf0) != 0xf0)	// 只要有数码管在亮，则一直扫描
+	if ((PORTD & 0xf0) != 0xf0)		// 只要有数码管在亮，则一直扫描
 	{
 		Disp_1_digit(posit, DP_flag);
 		if (++posit >= 4) posit = 0;
@@ -111,6 +116,7 @@ void ShowWelcomeInterface(void)
 
 void UtilityWizards(void)
 {
+
 	unsigned char u, d, l, r, en, es;
 
 	unsigned char user_status;
