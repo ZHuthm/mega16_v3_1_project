@@ -52,15 +52,16 @@ Parameter:		unsigned char X : 0 - 83
 				unsigned char Y : 0 - 5
 Return:			void
 **********************************************************************/
-void LcdSetXY(unsigned char X,unsigned char Y);
+void LcdSetXY(unsigned char X, unsigned char Y);
 
 void LcdWriteChar(unsigned char c);
 
 void LcdWriteInverseChar(unsigned char c);
 
-void LcdWriteEnglishString(unsigned char X, unsigned char Y,unsigned char inverse, unsigned char *s);
+void LcdWriteEnglishString(unsigned char X, unsigned char Y, unsigned char inverse, unsigned char *s);
 
-void LcdWriteChineseString(unsigned char X, unsigned char y,
-	 					   unsigned char *pstr, unsigned char ch_width);
+void LcdWriteChineseChar(unsigned char X, unsigned char Y, unsigned char inverse, unsigned char *c);
+
+void LcdWriteChineseString(unsigned char X, unsigned char y, unsigned char inverse, unsigned char *pstr);
 
 #endif

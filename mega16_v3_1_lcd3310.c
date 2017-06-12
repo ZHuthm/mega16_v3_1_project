@@ -1,8 +1,10 @@
 #include <iom16v.h>
 #include <macros.h>
 
-#include "mega16_v3_1_lcd3310.h"
 #include "english6x8Pixel.h"
+#include "chinese_12x12.h"	
+#include "mega16_v3_1_lcd3310.h"
+
 
 // SPI initialize
 // clock rate: 1843199hz
@@ -140,9 +142,62 @@ void LcdWriteEnglishString(unsigned char X, unsigned char Y, unsigned char inver
 	}
 }
 
-void LcdWriteChineseString(unsigned char X, unsigned char y,
-	 					   unsigned char *pstr, unsigned char ch_width)
+void LcdWriteChineseChar(unsigned char x, unsigned char y, unsigned char inverse, unsigned char * c)
 {
+	unsigned char i, j;
 
+	LcdSetXY(x, y);
+
+	for (i = 0; i < chinese_12_len; i++)
+	{
+
+		if ((chinese_12[i].value[0] == *c) && (chinese_12[i].value[1] == *(c + 1)))
+		{
+			if (inverse)
+			{
+				for (j = 0; j < 12; j++)
+					LcdWriteByte(~chinese_12[i].matrix[j], 1);
+
+				LcdSetXY(x, y + 1);
+
+				for (j = 12; j < 24; j++)
+					LcdWriteByte(~chinese_12[i].matrix[j], 1);
+			}
+
+			else
+			{
+				for (j = 0; j < 12; j++)
+					LcdWriteByte(chinese_12[i].matrix[j], 1);
+
+				LcdSetXY(x, y + 1);
+
+				for (j = 12; j < 24; j++)
+					LcdWriteByte(chinese_12[i].matrix[j], 1);
+			}
+
+			break;
+
+		}
+
+	}
+}
+
+
+void LcdWriteChineseString(unsigned char x, unsigned char y, unsigned char inverse, unsigned char *pstr)
+{
+	unsigned char i, j;
+
+	while (*pstr)
+	{
+		
+		LcdWriteChineseChar(x, y, inverse, pstr);
+
+		x += 12;
+		
+		pstr++;
+		
+		pstr++;
+
+	}
 
 }
