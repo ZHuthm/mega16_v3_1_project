@@ -3,13 +3,13 @@
 
 void DelayMs(unsigned int);
 
-    #include "time.h"
+    #include "func_time.h"
 
-    #include "led.h"
+    #include "func_led.h"
 
-    #include "temperature.h"
+    #include "func_temperature.h"
 	
-	#include "settings.h"
+	#include "func_settings.h"
 
 
 void DelayMs(unsigned int mSec)

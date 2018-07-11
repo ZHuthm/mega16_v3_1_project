@@ -3,7 +3,7 @@
 
 typedef struct 
 {
-	unsigned char value[2];
+	unsigned char value[3];
 	unsigned char matrix[24];
 }Unicode_12;
 

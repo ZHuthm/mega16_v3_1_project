@@ -151,7 +151,9 @@ void LcdWriteChineseChar(unsigned char x, unsigned char y, unsigned char inverse
 	for (i = 0; i < chinese_12_len; i++)
 	{
 
-		if ((chinese_12[i].value[0] == *c) && (chinese_12[i].value[1] == *(c + 1)))
+		if ((chinese_12[i].value[0] == *c) 
+		&& (chinese_12[i].value[1] == *(c + 1))
+		&& (chinese_12[i].value[2] == *(c + 2)))
 		{
 			if (inverse)
 			{
@@ -194,9 +196,7 @@ void LcdWriteChineseString(unsigned char x, unsigned char y, unsigned char inver
 
 		x += 12;
 		
-		pstr++;
-		
-		pstr++;
+		pstr+=3;
 
 	}
 

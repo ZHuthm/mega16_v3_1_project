@@ -37,7 +37,7 @@ void timing(void)
 
 void StopWatch(void)
 {
-	if(time_flag == 0)		// == 0 ��ʾ�����ھ�ֹģʽ��������ʼ��ʱ
+	if(time_flag == 0)		// == 0 表示正处于静止模式，触发后开始计时
 	{
 		time_flag = 1;
 		
@@ -46,7 +46,7 @@ void StopWatch(void)
 		TCCR0 = 0x0B; //start timer0
 		
 	}
-	else				// != 0 ��ʾ�����ڼ�ʱģʽ����������뾲ֹģʽ
+	else				// != 0 表示正处于计时模式，触发后进入静止模式
 	{
 		time_flag = 0;
 		

@@ -37,7 +37,7 @@ void timer0_comp_isr(void)
 	/*----- compare occured TCNT0=OCR0 -----*/
 	timing();
 
-	if (menu_point == stopwatch_menu) 	// Èç¹ûÔÚstopwatch²Ëµ¥Àï£¬ÔòÃ¿¸ô1sÏìÁå
+	if (menu_point == stopwatch_menu) 	// å¦‚æœåœ¨stopwatchèœå•é‡Œï¼Œåˆ™æ¯éš”1så“é“ƒ
 	{
 		if (ms == 0) PORTA &= ~(1 << 3);
 		if (ms == 20) PORTA |= (1 << 3);
@@ -62,7 +62,7 @@ void timer2_comp_isr(void)
 		} 	
 	}
 
-	if ((PORTD & 0xf0) != 0xf0)		// Ö»ÒªÓĞÊıÂë¹ÜÔÚÁÁ£¬ÔòÒ»Ö±É¨Ãè
+	if ((PORTD & 0xf0) != 0xf0)		// åªè¦æœ‰æ•°ç ç®¡åœ¨äº®ï¼Œåˆ™ä¸€ç›´æ‰«æ
 	{
 		Disp_1_digit(posit, DP_flag);
 		if (++posit >= 4) posit = 0;
@@ -127,7 +127,8 @@ void UtilityWizards(void)
 
 	if (user_status == 1)
 	{
-		LcdWriteEnglishString(18, 2, 0, "Welcome!");
+		LcdWriteChineseString(20, 2, 0, "æ¬¢");
+		LcdWriteChineseString(56, 2, 0, "è¿");
 
 		DelayMs(3000);
 
@@ -244,7 +245,7 @@ void ShowMenu(void)
 
 void main(void)
 {
-	unsigned char refresh_flag = 1;		// Ë¢ĞÂ±êÖ¾Î»£¬ÓĞÏÔÊ¾±ä»¯Îª1
+	unsigned char refresh_flag = 1;		// åˆ·æ–°æ ‡å¿—ä½ï¼Œæœ‰æ˜¾ç¤ºå˜åŒ–ä¸º1
 
 	unsigned char action_flag = 0;
 
@@ -273,9 +274,9 @@ void main(void)
 
 			case UP:
 				--user_choice;
-				if (user_choice < disp_start) disp_start--;		// ÓÃ»§Ñ¡ÏîĞ¡ÓÚ´°¿ÚÖ¸Õë
-				if (user_choice >= max_items) {					// ·´ÏòÒç³ö
-					user_choice = max_items - 1;				// ÓÃ»§Ñ¡Ïî»Øµ½×îºóÒ»¸ö
+				if (user_choice < disp_start) disp_start--;		// ç”¨æˆ·é€‰é¡¹å°äºçª—å£æŒ‡é’ˆ
+				if (user_choice >= max_items) {					// åå‘æº¢å‡º
+					user_choice = max_items - 1;				// ç”¨æˆ·é€‰é¡¹å›åˆ°æœ€åä¸€ä¸ª
 					if (max_items > DISPLAY_ITEMS) disp_start = max_items - DISPLAY_ITEMS;
 					else disp_start = 0;
 				}

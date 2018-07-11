@@ -18,11 +18,11 @@ void ShowTempInterface(void)
 
 void ShowTemp(void)
 {
-	unsigned char tmp[2];//±£´æÎÂ¶È×Ö½Ú
+	unsigned char tmp[2];//ä¿å­˜æ¸©åº¦å­—èŠ‚
 
 	unsigned char show_tmp[3];
 
-	char tval;    //±£´æÎÂ¶ÈÖµ
+	char tval;    //ä¿å­˜æ¸©åº¦å€¼
 
 	ShowTempInterface();
 
@@ -39,15 +39,15 @@ void ShowTemp(void)
 		{
 			time_1s_ok = 0;
 
-			if ((ds18b20ConvertTemp(tmp) & (1 << 0)) == 0)//Èç¹û×ª»»³É¹¦
+			if ((ds18b20ConvertTemp(tmp) & (1 << 0)) == 0)//å¦‚æœè½¬æ¢æˆåŠŸ
 			{
-				tval = GetTemperature(tmp);//¼ÆËãÊµ¼ÊÎÂ¶ÈÖµ
+				tval = GetTemperature(tmp);//è®¡ç®—å®é™…æ¸©åº¦å€¼
 
 				TempToStr(tval, show_tmp);
 
 				LcdWriteEnglishString(48, 3, 0, "     ");
 
-				LcdWriteEnglishString(54, 3, 0, show_tmp); //Ê®½øÖÆÏÔÊ¾ÎÂ¶ÈÖµ
+				LcdWriteEnglishString(54, 3, 0, show_tmp); //åè¿›åˆ¶æ˜¾ç¤ºæ¸©åº¦å€¼
 			}
 			else
 				LcdWriteEnglishString(48, 3, 1, "ERROR");

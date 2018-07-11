@@ -34,7 +34,7 @@ const unsigned char J = 40	;
 */
 /******************************************************/
 
-// Pause for exactly ¡®tick¡¯ number of ticks = 3us 
+// Pause for exactly â€˜tickâ€™ number of ticks = 3us 
 // Implementation is platform specific 
 void tickDelay(unsigned int tick)
 {
@@ -251,13 +251,13 @@ void TempToStr(char temp,unsigned char *s_t)
 
 
 /*
-unsigned char tmp[3];//±£´æÎÂ¶È×Ö½Ú
-char tval;    //±£´æÎÂ¶ÈÖµ
+unsigned char tmp[3];//ä¿å­˜æ¸©åº¦å­—èŠ‚
+char tval;    //ä¿å­˜æ¸©åº¦å€¼
 
-if((ds18b20ConvertTemp(tmp) & (1<<0)) == 0)//Èç¹û×ª»»³É¹¦
+if((ds18b20ConvertTemp(tmp) & (1<<0)) == 0)//å¦‚æœè½¬æ¢æˆåŠŸ
     {
-       tval=GetTemperature(tmp);//¼ÆËãÊµ¼ÊÎÂ¶ÈÖµ
-	   tmp//Ê®½øÖÆÏÔÊ¾ÎÂ¶ÈÖµ
+       tval=GetTemperature(tmp);//è®¡ç®—å®é™…æ¸©åº¦å€¼
+	   tmp//åè¿›åˆ¶æ˜¾ç¤ºæ¸©åº¦å€¼
       if(tval>=0)
         //to do...
 		
